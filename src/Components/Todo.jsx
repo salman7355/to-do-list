@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { BsArchiveFill } from "react-icons/bs";
 import { BiEditAlt } from "react-icons/bi";
 import { IoMdDoneAll } from "react-icons/io";
@@ -23,7 +23,7 @@ const Todo = ({ title, id }) => {
     <div className="todo m-3 p-3">
       <p className="text-start mb-5">{title}</p>
       <div className="d-flex justify-content-end">
-        <BiEditAlt className="me-3" />
+        <BiEditAlt onClick={() => edit(id)} className="me-3" />
         <IoMdDoneAll onClick={() => checkeditem(id)} className="me-3" />
         <BsArchiveFill onClick={() => delTask(id)} className="me-3" />
       </div>

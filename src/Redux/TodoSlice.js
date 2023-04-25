@@ -8,41 +8,49 @@ export const TodoSlice = createSlice({
       id: 1,
       title: "task number 1",
       isDone: false,
+      isEditing: false,
     },
     {
       id: 2,
       title: "task number 2",
       isDone: true,
+      isEditing: false,
     },
     {
       id: 3,
       title: "task number 3",
       isDone: false,
+      isEditing: false,
     },
     {
       id: 4,
       title: "task number 4",
       isDone: true,
+      isEditing: false,
     },
     {
       id: 5,
       title: "task number 5",
       isDone: false,
+      isEditing: false,
     },
     {
       id: 6,
       title: "task number 6",
       isDone: true,
+      isEditing: false,
     },
     {
       id: 7,
       title: "task number 7",
       isDone: false,
+      isEditing: false,
     },
     {
       id: 8,
       title: "task number 8",
       isDone: false,
+      isEditing: false,
     },
   ],
 
@@ -56,16 +64,10 @@ export const TodoSlice = createSlice({
       state.push(data);
     },
     Completed: (state, action) => {
-      const newState = action.payload.filter((item) =>
-        item.isDone === true ? item : null
-      );
-      return newState;
+      return state.filter((item) => (item.isDone === true ? item : null));
     },
     Active: (state, action) => {
-      const newState = action.payload.filter((item) =>
-        item.isDone === false ? item : null
-      );
-      return newState;
+      return state.filter((item) => (item.isDone === false ? item : null));
     },
     All: (state, action) => {
       return action.payload;
@@ -74,18 +76,40 @@ export const TodoSlice = createSlice({
       const deltask = state.filter((item) => item.id !== action.payload);
       return deltask;
     },
-    Edit: (state, action) => {},
+    Edit: (state, action) => {
+      state.map((todo) => {
+        if (todo.id == action.payload) {
+          todo.isEditing = !todo.isEditing;
+          //todo.title = action.payload.value;
+        }
+      });
+    },
+    SubmitTitle: (state, action) => {
+      state.map((todo) => {
+        if (todo.id == action.payload) {
+          todo.isEditing = !todo.isEditing;
+          todo.title = action.payload.value;
+        }
+      });
+    },
     Checked: (state, action) => {
       state.map((todo) => {
         if (todo.id == action.payload) {
-          todo.isDone = true;
+          todo.isDone = !todo.isDone;
         }
-        return state;
       });
     },
   },
 });
 
-export const { AddUser, Completed, Active, All, DeleteTask, Checked, Edit } =
-  TodoSlice.actions;
+export const {
+  AddUser,
+  Completed,
+  Active,
+  All,
+  DeleteTask,
+  Checked,
+  Edit,
+  SubmitTitle,
+} = TodoSlice.actions;
 export default TodoSlice.reducer;
