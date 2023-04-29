@@ -3,10 +3,20 @@ import { BsArchiveFill } from "react-icons/bs";
 import { BiEditAlt } from "react-icons/bi";
 import { IoMdDoneAll } from "react-icons/io";
 import { useDispatch, useSelector } from "react-redux";
-import { Checked, DeleteTask, Edit } from "../Redux/TodoSlice";
-import { useRef } from "react";
-const Todo = ({ title, id }) => {
+import {
+  Checked,
+  DeleteTask,
+  StartEditing,
+  SubmitEdit,
+} from "../Redux/TodoSlice";
+import { BiCheck } from "react-icons/bi";
+const Todo = ({ id, isEditing }) => {
+  const { title } = useSelector((state) => {
+    return state.Todo.find((item) => item.id === id);
+  });
   const dispatch = useDispatch();
+  const [value, setValue] = useState(title);
+
   const delTask = (id) => {
     dispatch(DeleteTask(id));
   };
@@ -16,16 +26,36 @@ const Todo = ({ title, id }) => {
   };
 
   const edit = (id) => {
-    dispatch(Edit(id));
+    dispatch(StartEditing({ id }));
   };
-
+  const handleSubmitEdit = (id, title) => {
+    dispatch(SubmitEdit({ id, value: title }));
+  };
   return (
     <div className="todo m-3 p-3">
-      <p className="text-start mb-5">{title}</p>
+      {!isEditing && <p className="text-start mb-5">{title}</p>}
+      {isEditing && (
+        <input
+          type="text"
+          value={value}
+          onChange={(e) => setValue(e.target.value)}
+        />
+      )}
       <div className="d-flex justify-content-end">
-        <BiEditAlt onClick={() => edit(id)} className="me-3" />
-        <IoMdDoneAll onClick={() => checkeditem(id)} className="me-3" />
-        <BsArchiveFill onClick={() => delTask(id)} className="me-3" />
+        {!isEditing && (
+          <>
+            <BiEditAlt onClick={() => edit(id, title)} className="me-3" />
+            <IoMdDoneAll onClick={() => checkeditem(id)} className="me-3" />
+            <BsArchiveFill onClick={() => delTask(id)} className="me-3" />
+          </>
+        )}
+        {isEditing && (
+          <BiCheck
+            color="green"
+            size={20}
+            onClick={() => handleSubmitEdit(id, value)}
+          />
+        )}
       </div>
     </div>
   );

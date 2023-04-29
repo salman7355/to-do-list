@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { useState } from "react";
 
 export const TodoSlice = createSlice({
   name: "Todo",
@@ -76,11 +75,19 @@ export const TodoSlice = createSlice({
       const deltask = state.filter((item) => item.id !== action.payload);
       return deltask;
     },
-    Edit: (state, action) => {
+    StartEditing: (state, action) => {
       state.map((todo) => {
-        if (todo.id == action.payload) {
+        if (todo.id == action.payload.id) {
           todo.isEditing = !todo.isEditing;
-          //todo.title = action.payload.value;
+        }
+      });
+    },
+    SubmitEdit: (state, action) => {
+      console.log(action.payload);
+      state.map((todo) => {
+        if (todo.id == action.payload.id) {
+          todo.isEditing = !todo.isEditing;
+          todo.title = action.payload.value;
         }
       });
     },
@@ -109,7 +116,8 @@ export const {
   All,
   DeleteTask,
   Checked,
-  Edit,
   SubmitTitle,
+  StartEditing,
+  SubmitEdit,
 } = TodoSlice.actions;
 export default TodoSlice.reducer;
