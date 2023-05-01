@@ -6,7 +6,12 @@ const TodoList = () => {
   const items = useSelector((state) => state.Todo);
 
   return (
-    <div className="d-flex flex-wrap gap-2 justify-content-center mt-3">
+    <div
+      className="d-flex flex-wrap gap-2 justify-content-center mt-3"
+      style={{
+        color: "black",
+      }}
+    >
       {items.map((item) => (
         <Todo key={item.id} id={item.id} isEditing={item.isEditing} />
       ))}

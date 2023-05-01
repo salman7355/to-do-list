@@ -13,7 +13,7 @@ const AddTask = () => {
 
   return (
     <div>
-      <h1 className="m-4">TODO</h1>
+      <h1 className="p-4">TODO</h1>
       <div className="d-flex justify-content-center mb-4">
         <input className="c-checkbox" type="checkbox" id="checkbox" />
         <div className="c-formContainer">

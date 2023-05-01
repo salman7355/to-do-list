@@ -1,5 +1,14 @@
 .App {
   text-align: center;
+  color: white;
+  background-color: black;
+  height: 100vh;
+}
+
+@media (max-width: 1030px) {
+  .App {
+    height: max-content;
+  }
 }
 
 .App-logo {

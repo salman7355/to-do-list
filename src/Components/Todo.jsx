@@ -35,11 +35,16 @@ const Todo = ({ id, isEditing }) => {
     <div className="todo m-3 p-3">
       {!isEditing && <p className="text-start mb-5">{title}</p>}
       {isEditing && (
-        <input
-          type="text"
-          value={value}
-          onChange={(e) => setValue(e.target.value)}
-        />
+        <div className="inputbox">
+          <input
+            type="text"
+            value={value}
+            className="input"
+            onChange={(e) => setValue(e.target.value)}
+          />
+          <span>{value}</span>
+          <i></i>
+        </div>
       )}
       <div className="d-flex justify-content-end">
         {!isEditing && (
@@ -51,7 +56,7 @@ const Todo = ({ id, isEditing }) => {
         )}
         {isEditing && (
           <BiCheck
-            color="green"
+            className=" check"
             size={20}
             onClick={() => handleSubmitEdit(id, value)}
           />
